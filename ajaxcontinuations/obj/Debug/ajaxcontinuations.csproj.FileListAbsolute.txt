@@ -1,8 +1,0 @@
-d:\source\ajaxcontinuations\ajaxcontinuations\obj\Debug\ResolveAssemblyReference.cache
-d:\source\ajaxcontinuations\ajaxcontinuations\bin\ajaxcontinuations.dll
-d:\source\ajaxcontinuations\ajaxcontinuations\bin\ajaxcontinuations.pdb
-d:\source\ajaxcontinuations\ajaxcontinuations\bin\Newtonsoft.Json.dll
-d:\source\ajaxcontinuations\ajaxcontinuations\bin\Newtonsoft.Json.pdb
-d:\source\ajaxcontinuations\ajaxcontinuations\bin\Newtonsoft.Json.xml
-d:\source\ajaxcontinuations\ajaxcontinuations\obj\Debug\ajaxcontinuations.dll
-d:\source\ajaxcontinuations\ajaxcontinuations\obj\Debug\ajaxcontinuations.pdb
