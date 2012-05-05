@@ -2,8 +2,9 @@
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using Newtonsoft.Json.Serialization;
+using ajaxcontinuations.Mvc;
 
-namespace ajaxcontinuations.Mvc
+namespace MvcAjaxSupport.Mapping
 {
     public class JsonResultMapping : IGenericResultMapping
     {

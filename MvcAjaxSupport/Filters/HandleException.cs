@@ -1,7 +1,8 @@
 using System.Web;
 using System.Web.Mvc;
+using ajaxcontinuations.Mvc;
 
-namespace ajaxcontinuations.Mvc
+namespace MvcAjaxSupport.Filters
 {
     public class HandleException : FilterAttribute, IExceptionFilter
     {

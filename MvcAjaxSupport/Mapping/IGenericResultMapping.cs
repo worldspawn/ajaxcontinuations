@@ -1,6 +1,7 @@
 using System.Web.Mvc;
+using ajaxcontinuations.Mvc;
 
-namespace ajaxcontinuations.Mvc
+namespace MvcAjaxSupport.Mapping
 {
     public interface IGenericResultMapping
     {

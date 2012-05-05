@@ -4,6 +4,9 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
+using MvcAjaxSupport;
+using MvcAjaxSupport.Filters;
+using MvcAjaxSupport.Mapping;
 using ajaxcontinuations.Mvc;
 
 namespace ajaxcontinuations

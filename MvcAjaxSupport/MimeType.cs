@@ -1,4 +1,4 @@
-namespace ajaxcontinuations.Mvc
+namespace MvcAjaxSupport
 {
     public static class MimeType
     {

@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using MvcAjaxSupport.Mapping;
 
 namespace ajaxcontinuations.Mvc
 {
