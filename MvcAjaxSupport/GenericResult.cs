@@ -88,6 +88,9 @@ namespace MvcAjaxSupport
             if (Model != null)
                 result.Add("model", Model);
 
+            if (ResultName != null)
+                result.Add("resultName", ResultName);
+
             return result;
         }
 
