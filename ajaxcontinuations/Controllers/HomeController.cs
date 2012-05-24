@@ -4,12 +4,16 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using MvcAjaxSupport;
-using ajaxcontinuations.Mvc;
 
 namespace ajaxcontinuations.Controllers
 {
     public class HomeController : Controller
     {
+        public ActionResult Index()
+        {
+            return GenericResult.CreateSuccess().SetResultName("Index");
+        }
+
         public ActionResult TestPoint()
         {
             var model = new { Value = "Hello World!" };

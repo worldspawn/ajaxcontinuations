@@ -7,7 +7,6 @@ using System.Web.Routing;
 using MvcAjaxSupport;
 using MvcAjaxSupport.Filters;
 using MvcAjaxSupport.Mapping;
-using ajaxcontinuations.Mvc;
 
 namespace ajaxcontinuations
 {

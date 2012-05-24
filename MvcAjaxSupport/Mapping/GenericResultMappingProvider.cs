@@ -1,7 +1,6 @@
 using System.Collections.Generic;
-using MvcAjaxSupport.Mapping;
 
-namespace ajaxcontinuations.Mvc
+namespace MvcAjaxSupport.Mapping
 {
     public class GenericResultMappingProvider
     {

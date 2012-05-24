@@ -2,20 +2,22 @@
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{B457BC59-BD1E-481B-98F8-41A661A4412F}</ProjectGuid>
+    <ProjectGuid>{38DEF3E0-3DDC-4B30-A83B-4966481C9B95}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>MvcAjaxSupport</RootNamespace>
-    <AssemblyName>MvcAjaxSupport</AssemblyName>
+    <RootNamespace>ajaxcontinuations.js</RootNamespace>
+    <AssemblyName>ajaxcontinuations.js</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkProfile>Client</TargetFrameworkProfile>
     <FileAlignment>512</FileAlignment>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
     <RestorePackages>true</RestorePackages>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
+    <PlatformTarget>x86</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -24,7 +26,8 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
+    <PlatformTarget>x86</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
@@ -32,34 +35,23 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject />
+  </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Newtonsoft.Json">
-      <HintPath>..\packages\Newtonsoft.Json.4.5.4\lib\net40\Newtonsoft.Json.dll</HintPath>
-    </Reference>
-    <Reference Include="System" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.Web" />
-    <Reference Include="System.Web.Mvc, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
-    <Reference Include="Microsoft.CSharp" />
+    <Content Include="ajaxHelper.js" />
+    <Content Include="errorPolicy.js" />
+    <Content Include="init.js" />
+    <Content Include="jquery.ajaxcontinuations.js" />
+    <Content Include="navigatePolicy.js" />
+    <Content Include="payloadPolicy.js" />
+    <Content Include="refreshPolicy.js" />
   </ItemGroup>
-  <ItemGroup>
-    <Compile Include="GenericResult.cs" />
-    <Compile Include="Mapping\GenericResultMappingProvider.cs" />
-    <Compile Include="Filters\HandleException.cs" />
-    <Compile Include="Mapping\IGenericResultMapping.cs" />
-    <Compile Include="Mapping\JsonResultMapping.cs" />
-    <Compile Include="Message.cs" />
-    <Compile Include="MessageCategory.cs" />
-    <Compile Include="MimeType.cs" />
-    <Compile Include="Mapping\ViewResultMapping.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\nuget.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>copy "$(ProjectDir)jquery.ajaxcontinuations.js" + "$(ProjectDir)errorPolicy.js" + "$(ProjectDir)navigatePolicy.js" + "$(ProjectDir)payloadPolicy.js" + "$(ProjectDir)refreshPolicy.js" + "$(ProjectDir)ajaxHelper.js" + "$(ProjectDir)init.js" + "$(TargetDir)jquery.ajaxcontinuations.js"</PostBuildEvent>
+  </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

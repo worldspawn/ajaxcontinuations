@@ -1,5 +1,3 @@
-using ajaxcontinuations.Mvc;
-
 namespace MvcAjaxSupport
 {
     public class Message

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using ajaxcontinuations.Mvc;
+using MvcAjaxSupport.Mapping;
 
 namespace MvcAjaxSupport
 {
@@ -24,7 +24,7 @@ namespace MvcAjaxSupport
         public string ResultName { get; set; }
         public IList<Message> Messages { get; set; }
 
-        public static GenericResult CreateSuccess(string message)
+        public static GenericResult CreateSuccess(string message = null)
         {
             return new GenericResult().SetSuccess(true).AddMessage(message, MessageCategory.Success);
         }

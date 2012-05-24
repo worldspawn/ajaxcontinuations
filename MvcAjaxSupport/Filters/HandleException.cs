@@ -1,6 +1,5 @@
 using System.Web;
 using System.Web.Mvc;
-using ajaxcontinuations.Mvc;
 
 namespace MvcAjaxSupport.Filters
 {
