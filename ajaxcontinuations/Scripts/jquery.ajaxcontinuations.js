@@ -34,7 +34,7 @@ $.continuations = new $.continuationModule(eventAgreggrator, [
     init: function () {
       var self = this;
       $(document).ajaxComplete(function (e, xhr) {
-        self.eventAggregator.publish('AjaxCompleted', {
+        self.eventAgreggator.publish('AjaxCompleted', {
           correlationId: xhr.getResponseHeader(CORRELATION_ID),
           xhr: xhr
         })
@@ -56,7 +56,7 @@ $.continuations = new $.continuationModule(eventAgreggrator, [
           })
         },
         beforeSend: function (xhr) {
-          self.setupRequest(xhr)
+          self.setupRequest(xhr, self)
         }
       })
     },
@@ -68,7 +68,7 @@ $.continuations = new $.continuationModule(eventAgreggrator, [
 
       var continuation = msg.continuation;
       continuation.correlationId = msg.response.getResponseHeader('X-Correlation-Id');
-
+      
       this.process(continuation);
     },
     onError: function (msg) {
@@ -90,7 +90,8 @@ $.continuations = new $.continuationModule(eventAgreggrator, [
         id = new Date().getTime().toString();
       }
       xhr.setRequestHeader(CORRELATION_ID, id);
-      this.eventAggregator.publish('AjaxStarted', {
+      
+      settings.eventAgreggator.publish('AjaxStarted', {
         correlationId: id,
         xhr: xhr
       });
@@ -102,13 +103,14 @@ $.continuations = new $.continuationModule(eventAgreggrator, [
     process: function (continuation) {
       continuation = $.extend(new AjaxContinuation(), continuation);
       var matchingPolicies = [];
+      console.log(this.policies);
       for (var i = 0; i < this.policies.length; ++i) {
         var p = this.policies[i];
         if (p.matches(continuation)) {
           matchingPolicies.push(p);
         }
       }
-
+      console.log(matchingPolicies);
       for (var i = 0; i < matchingPolicies.length; ++i) {
         matchingPolicies[i].execute(continuation);
       }
@@ -141,11 +143,12 @@ $.continuations = new $.continuationModule(eventAgreggrator, [
 
 ﻿ContinuationModule.Policies.PayloadPolicy = function (continuationModule) {
   this.continuationModule = continuationModule;
+﻿  console.log(continuationModule);
   this.matches = function (continuation) {
-    return continuation.topic != null && continuation.model != null;
+    return continuation.resultName != null;// && continuation.model != null;
   };
   this.execute = function (continuation) {
-    this.continuationModule.eventAggregator.publish(continuation.resultName, continuation.payload);
+    this.continuationModule.eventAgreggator.publish(continuation.resultName, continuation);
   };
 };
 
@@ -186,10 +189,10 @@ $.continuations = new $.continuationModule(eventAgreggrator, [
 (function ($, global) {
   var aggregator = {
     publish: function (topic, payload) {
-      $(document).trigger(topic, payload);
+      $(window).trigger(topic, payload);
     },
     subscribe: function (topic, context, callback) {
-      $(document).bind(topic, context, callback);
+      $(window).bind(topic, context, callback);
     }
   };
 

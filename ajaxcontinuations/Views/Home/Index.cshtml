@@ -8,5 +8,8 @@
 <button>Do Ajax</button>
 
 <script type="text/javascript">
-
+  Continuations.eventAgreggator.subscribe('TestMessage', function (ev, data) {
+    console.log(data.messages[0].text);
+  });
+  ContinuationModule.ajaxJson('/home/test', JSON.stringify({ message : 'Hello World!' }));
 </script>
