@@ -50,7 +50,8 @@
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\nuget.targets" />
   <PropertyGroup>
-    <PostBuildEvent>copy "$(ProjectDir)jquery.ajaxcontinuations.js" + "$(ProjectDir)errorPolicy.js" + "$(ProjectDir)navigatePolicy.js" + "$(ProjectDir)payloadPolicy.js" + "$(ProjectDir)refreshPolicy.js" + "$(ProjectDir)ajaxHelper.js" + "$(ProjectDir)init.js" + "$(TargetDir)jquery.ajaxcontinuations.js"</PostBuildEvent>
+    <PostBuildEvent>
+    </PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
