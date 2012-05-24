@@ -47,6 +47,12 @@
     <Content Include="payloadPolicy.js" />
     <Content Include="refreshPolicy.js" />
   </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Placeholder.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\nuget.targets" />
   <PropertyGroup>
