@@ -14,4 +14,4 @@
     ContinuationModule.Policies.NavigatePolicy,
     ContinuationModule.Policies.RefreshPolicy
   ]);
-}(jQuery, this))
+}(jQuery, this));

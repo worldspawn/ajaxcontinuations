@@ -4,12 +4,21 @@
 
 <h2>Index</h2>
 
-
+<div id="bindingcontainer">
 <button>Do Ajax</button>
+</div>
 
 <script type="text/javascript">
   Continuations.eventAgreggator.subscribe('TestMessage', function (ev, data) {
     console.log(data.messages[0].text);
   });
-  ContinuationModule.ajaxJson('/home/test', JSON.stringify({ message : 'Hello World!' }));
+  (function ($, ko) {
+    var model = {
+      doAjax : function () {
+        ContinuationModule.ajaxJson('/home/test', JSON.stringify({ message : 'Hello World!' }));
+      }
+    }
+    
+    ko.applyBindings(model, $('#bindingcontainer')[0]);
+  }(jQuery, ko));
 </script>
