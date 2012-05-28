@@ -22,8 +22,8 @@ $.continuations = new $.continuationModule(eventAgreggrator, [
     messages: []
   }
 
-  function ContinuationModule(eventAgreggator, policies) {
-    this.eventAgreggator = eventAgreggator;
+  function ContinuationModule(eventAggregator, policies) {
+    this.eventAggregator = eventAggregator;
     this.init();
     for (var i = 0; i < policies.length; i++)
       this.applyPolicy(new policies[i](this))
@@ -56,7 +56,7 @@ $.continuations = new $.continuationModule(eventAgreggrator, [
           })
         },
         beforeSend: function (xhr) {
-          self.setupRequest(xhr)
+          self.setupRequest(xhr, self)
         }
       })
     },
@@ -90,7 +90,7 @@ $.continuations = new $.continuationModule(eventAgreggrator, [
         id = new Date().getTime().toString();
       }
       xhr.setRequestHeader(CORRELATION_ID, id);
-      this.eventAggregator.publish('AjaxStarted', {
+      settings.eventAggregator.publish('AjaxStarted', {
         correlationId: id,
         xhr: xhr
       });
@@ -113,7 +113,7 @@ $.continuations = new $.continuationModule(eventAgreggrator, [
         matchingPolicies[i].execute(continuation);
       }
     }
-  }
+  };
 
   ContinuationModule.Policies = {};
   global.ContinuationModule = ContinuationModule;

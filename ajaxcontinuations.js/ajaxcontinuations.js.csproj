@@ -39,30 +39,32 @@
     <StartupObject />
   </PropertyGroup>
   <ItemGroup>
-    <Content Include="ajaxHelper.js" />
-    <Content Include="errorPolicy.js" />
-    <Content Include="init.js" />
-    <Content Include="jquery.ajaxcontinuations.js" />
-    <Content Include="navigatePolicy.js" />
-    <Content Include="payloadPolicy.js" />
-    <Content Include="refreshPolicy.js" />
+    <JsFiles Include="ajaxcontinuations.js" />
+    <JsFiles Include="errorPolicy.js" />
+    <JsFiles Include="navigatePolicy.js" />
+    <JsFiles Include="resultPolicy.js" />
+    <JsFiles Include="refreshPolicy.js" />
+    <JsFiles Include="ajaxHelper.js" />
+    <JsFiles Include="init.js" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Placeholder.cs" />
+    <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Reference Include="System" />
-  </ItemGroup>
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\nuget.targets" />
-  <PropertyGroup>
-    <PostBuildEvent>copy "$(ProjectDir)jquery.ajaxcontinuations.js" + "$(ProjectDir)errorPolicy.js" + "$(ProjectDir)navigatePolicy.js" + "$(ProjectDir)payloadPolicy.js" + "$(ProjectDir)refreshPolicy.js" "$(TargetDir)jquery.ajaxcontinuations.js"</PostBuildEvent>
-  </PropertyGroup>
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
-       Other similar extension points exist, see Microsoft.Common.targets.
-  <Target Name="BeforeBuild">
+  <Target Name="Build">
+    <MakeDir Directories="$(OutputPath)" Condition="!Exists($(OutputPath))" />
+    <!--<ReadLinesFromFile File="%(JsFiles.Identity)">
+      <Output TaskParameter="Lines" ItemName="lines" />
+    </ReadLinesFromFile>
+    <WriteLinesToFile File="$(OutputPath)ajax.continuations.js" Lines="@(Lines)" Overwrite="false" />-->
   </Target>
-  <Target Name="AfterBuild">
+  <Target Name="Clean">
+    <RemoveDir Condition="Exists($(OutputPath))" Directories="$(OutputPath)" />
   </Target>
-  -->
+  <Target Name="Rebuild" DependsOnTargets="Clean;Build">
+  </Target>
+  <Target Name="Merge" AfterTargets="Build">
+    <Exec Command="copy &quot;$(ProjectDir)ajaxcontinuations.js&quot; + &quot;$(ProjectDir)errorPolicy.js&quot; + &quot;$(ProjectDir)navigatePolicy.js&quot; + &quot;$(ProjectDir)resultPolicy.js&quot; + &quot;$(ProjectDir)refreshPolicy.js&quot; + &quot;$(ProjectDir)ajaxHelper.js&quot; + &quot;$(ProjectDir)init.js&quot; &quot;$(OutputPath)jquery.ajaxcontinuations.js&quot;" />
+    <!--<Exec Command="copy y| copy &quot;%(JsFiles.Identity)&quot; &quot;$(TargetDir)jquery.ajaxcontinuations.js&quot;" WorkingDirectory="$(ProjectDir)" />-->
+  </Target>
 </Project>
