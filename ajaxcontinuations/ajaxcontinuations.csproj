@@ -56,7 +56,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="..\ajaxcontinuations.js\bin\Debug\jquery.ajaxcontinuations.js">
+    <Content Include="..\ajaxcontinuations.js\bin\$(Configuration)\jquery.ajaxcontinuations.js">
       <Link>Scripts\jquery.ajaxcontinuations.js</Link>
     </Content>
     <Content Include="Global.asax" />
