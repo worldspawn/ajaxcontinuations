@@ -2,6 +2,9 @@
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ajaxcontinuations", "ajaxcontinuations\ajaxcontinuations.csproj", "{15BF933E-AB1C-47E6-8641-E9560545A6C1}"
+	ProjectSection(ProjectDependencies) = postProject
+		{38DEF3E0-3DDC-4B30-A83B-4966481C9B95} = {38DEF3E0-3DDC-4B30-A83B-4966481C9B95}
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{6A917B63-DA3F-4B72-A048-AA851F313BDF}"
 	ProjectSection(SolutionItems) = preProject
