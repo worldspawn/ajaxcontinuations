@@ -9,9 +9,9 @@
   };
 
   global.Continuations = new ContinuationModule(aggregator, [
-    ContinuationModule.Policies.PayloadPolicy,
+    ContinuationModule.Policies.ResultPolicy,
     ContinuationModule.Policies.ErrorPolicy,
     ContinuationModule.Policies.NavigatePolicy,
     ContinuationModule.Policies.RefreshPolicy
   ]);
-}(jQuery, this))
+}(jQuery, this));

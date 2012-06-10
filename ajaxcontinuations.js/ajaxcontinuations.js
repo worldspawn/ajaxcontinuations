@@ -22,8 +22,8 @@ $.continuations = new $.continuationModule(eventAgreggrator, [
     messages: []
   }
 
-  function ContinuationModule(eventAgreggator, policies) {
-    this.eventAgreggator = eventAgreggator;
+  function ContinuationModule(eventAggregator, policies) {
+    this.eventAggregator = eventAggregator;
     this.init();
     for (var i = 0; i < policies.length; i++)
       this.applyPolicy(new policies[i](this))
@@ -34,7 +34,7 @@ $.continuations = new $.continuationModule(eventAgreggrator, [
     init: function () {
       var self = this;
       $(document).ajaxComplete(function (e, xhr) {
-        self.eventAgreggator.publish('AjaxCompleted', {
+        self.eventAggregator.publish('AjaxCompleted', {
           correlationId: xhr.getResponseHeader(CORRELATION_ID),
           xhr: xhr
         })
@@ -68,7 +68,7 @@ $.continuations = new $.continuationModule(eventAgreggrator, [
 
       var continuation = msg.continuation;
       continuation.correlationId = msg.response.getResponseHeader('X-Correlation-Id');
-      
+
       this.process(continuation);
     },
     onError: function (msg) {
@@ -90,8 +90,7 @@ $.continuations = new $.continuationModule(eventAgreggrator, [
         id = new Date().getTime().toString();
       }
       xhr.setRequestHeader(CORRELATION_ID, id);
-      
-      settings.eventAgreggator.publish('AjaxStarted', {
+      settings.eventAggregator.publish('AjaxStarted', {
         correlationId: id,
         xhr: xhr
       });
@@ -103,7 +102,6 @@ $.continuations = new $.continuationModule(eventAgreggrator, [
     process: function (continuation) {
       continuation = $.extend(new AjaxContinuation(), continuation);
       var matchingPolicies = [];
-      console.log(this.policies);
       for (var i = 0; i < this.policies.length; ++i) {
         var p = this.policies[i];
         if (p.matches(continuation)) {
@@ -121,85 +119,3 @@ $.continuations = new $.continuationModule(eventAgreggrator, [
   global.ContinuationModule = ContinuationModule;
 } (jQuery, window));
 
-﻿ContinuationModule.Policies.ErrorPolicy = function (continuationModule) {
-  this.continuationModule = continuationModule;
-  this.matches = function (continuation) {
-    return continuation.errors && continuation.errors.length != 0;
-  };
-  this.execute = function (continuation) {
-    this.continuationModule.eventAggregator.publish('ContinuationError', continuation);
-  };
-};
-
-﻿ContinuationModule.Policies.NavigatePolicy = function (continuationModule) {
-  this.continuationModule = continuationModule;
-  this.matches = function (continuation) {
-    return continuation.redirectUri != undefined && continuation.redirectUri != '';
-  };
-  this.execute = function (continuation) {
-    this.continuationModule.windowService.navigateTo(continuation.redirectUri);
-  };
-};
-
-﻿ContinuationModule.Policies.PayloadPolicy = function (continuationModule) {
-  this.continuationModule = continuationModule;
-﻿  console.log(continuationModule);
-  this.matches = function (continuation) {
-    return continuation.resultName != null;// && continuation.model != null;
-  };
-  this.execute = function (continuation) {
-    this.continuationModule.eventAgreggator.publish(continuation.resultName, continuation);
-  };
-};
-
-﻿ContinuationModule.Policies.RefreshPolicy = function (continuationModule) {
-  this.continuationModule = continuationModule;
-  this.matches = function (continuation) {
-    return continuation.refresh && continuation.refresh.toString() === 'true';
-  };
-  this.execute = function (continuation) {
-    this.continuationModule.windowService.refresh();
-  };
-};
-
-﻿﻿(function ($, global) {
-  global.ContinuationModule.ajaxJson = function (endpoint, payload) {
-    return $.ajax({
-      converters : {
-        'text json': function (data) {
-          return JSON.parse(data, function(key, value) {
-            if (typeof value === 'string') {
-                var a = /^(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2}):(\d{2}(?:\.\d*)?)Z$/.exec(value);
-                if (a)
-                    value = new Date(Date.UTC(+a[1], +a[2] - 1, +a[3], +a[4], +a[5], +a[6]));
-            }
-            return value;
-          });
-        }
-      },
-      url: endpoint,
-      type: 'POST',
-      contentType: 'application/json',
-      data: payload,
-      dataType: 'json'
-    });
-  };
-} (jQuery, this));
-
-(function ($, global) {
-  var aggregator = {
-    publish: function (topic, payload) {
-      $(window).trigger(topic, payload);
-    },
-    subscribe: function (topic, context, callback) {
-      $(window).bind(topic, context, callback);
-    }
-  };
-
-  global.Continuations = new ContinuationModule(aggregator, [
-    ContinuationModule.Policies.PayloadPolicy,
-    ContinuationModule.Policies.ErrorPolicy,
-    ContinuationModule.Policies.NavigatePolicy,
-    ContinuationModule.Policies.RefreshPolicy
-  ]);
-} (jQuery, this))

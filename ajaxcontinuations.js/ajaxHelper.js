@@ -20,5 +20,4 @@
       dataType: 'json'
     });
   };
-}(jQuery, this))
-
+}(jQuery, this));
