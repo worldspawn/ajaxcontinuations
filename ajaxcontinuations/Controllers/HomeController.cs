@@ -17,7 +17,9 @@ namespace ajaxcontinuations.Controllers
         [HttpPost]
         public ActionResult Test(string message)
         {
-            return GenericResult.CreateSuccess(string.Format("Message was {0}", message)).SetResultName("TestMessage");
+            return
+                GenericResult.CreateSuccess(string.Format("Message was {0}", message)).SetResultName("TestMessage").
+                    SetModel(new {Value = "Hello World!"});
         }
 
         public ActionResult TestPoint()

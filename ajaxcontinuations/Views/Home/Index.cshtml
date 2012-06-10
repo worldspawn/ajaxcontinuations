@@ -5,19 +5,19 @@
 <h2>Index</h2>
 
 <div id="bindingcontainer">
-<button>Do Ajax</button>
+  <button data-bind="click : doAjax">Do Ajax</button>
 </div>
 
 <script type="text/javascript">
-  Continuations.eventAgreggator.subscribe('TestMessage', function (ev, data) {
-    console.log(data.messages[0].text);
+  Continuations.eventAggregator.subscribe('TestMessage', function (ev, data) {
+    console.log(data.value);
   });
   (function ($, ko) {
     var model = {
-      doAjax : function () {
-        ContinuationModule.ajaxJson('/home/test', JSON.stringify({ message : 'Hello World!' }));
+      doAjax: function() {
+        $.ajaxJson('/home/test', JSON.stringify({ message: 'Hello World!' }));
       }
-    }
+    };
     
     ko.applyBindings(model, $('#bindingcontainer')[0]);
   }(jQuery, ko));

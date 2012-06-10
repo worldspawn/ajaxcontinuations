@@ -1,4 +1,4 @@
-﻿/*
+/*
 $.continuations = new $.continuationModule(eventAgreggrator, [
   jQuery.continuationModule.Policies.PayloadPolicy,
   jQuery.continuationModule.Policies.ErrorPolicy,
@@ -119,3 +119,84 @@ $.continuations = new $.continuationModule(eventAgreggrator, [
   global.ContinuationModule = ContinuationModule;
 } (jQuery, window));
 
+ContinuationModule.Policies.ErrorPolicy = function (continuationModule) {
+  this.continuationModule = continuationModule;
+  this.matches = function (continuation) {
+    return continuation.errors && continuation.errors.length != 0;
+  };
+  this.execute = function (continuation) {
+    this.continuationModule.eventAggregator.publish('ContinuationError', continuation);
+  };
+};
+
+ContinuationModule.Policies.NavigatePolicy = function (continuationModule) {
+  this.continuationModule = continuationModule;
+  this.matches = function (continuation) {
+    return continuation.redirectUri != undefined && continuation.redirectUri != '';
+  };
+  this.execute = function (continuation) {
+    this.continuationModule.windowService.navigateTo(continuation.redirectUri);
+  };
+};
+
+ContinuationModule.Policies.RefreshPolicy = function (continuationModule) {
+  this.continuationModule = continuationModule;
+  this.matches = function (continuation) {
+    return continuation.refresh && continuation.refresh.toString() === 'true';
+  };
+  this.execute = function (continuation) {
+    this.continuationModule.windowService.refresh();
+  };
+};
+
+ContinuationModule.Policies.ResultPolicy = function (continuationModule) {
+  this.continuationModule = continuationModule;
+  this.matches = function (continuation) {
+    return continuation.resultName != null;
+  };
+  this.execute = function (continuation) {
+    this.continuationModule.eventAggregator.publish(continuation.resultName, continuation.model);
+  };
+};
+
+﻿(function ($) {
+  $.ajaxJson = function (endpoint, payload) {
+    return $.ajax({
+      converters : {
+        'text json': function (data) {
+          return JSON.parse(data, function(key, value) {
+            if (typeof value === 'string') {
+                var a = /^(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2}):(\d{2}(?:\.\d*)?)Z$/.exec(value);
+                if (a)
+                    value = new Date(Date.UTC(+a[1], +a[2] - 1, +a[3], +a[4], +a[5], +a[6]));
+            }
+            return value;
+          });
+        }
+      },
+      url: endpoint,
+      type: 'POST',
+      contentType: 'application/json',
+      data: payload,
+      dataType: 'json'
+    });
+  };
+}(jQuery));
+﻿
+﻿(function($, global) {
+﻿  var aggregator = {
+﻿    publish: function(topic, payload) {
+﻿      $(document).trigger(topic, payload);
+﻿    },
+﻿    subscribe: function(topic, context, callback) {
+﻿      $(document).bind(topic, context, callback);
+﻿    }
+﻿  };
+
+﻿  global.Continuations = new ContinuationModule(aggregator, [
+﻿    ContinuationModule.Policies.ResultPolicy,
+﻿    ContinuationModule.Policies.ErrorPolicy,
+﻿    ContinuationModule.Policies.NavigatePolicy,
+﻿    ContinuationModule.Policies.RefreshPolicy
+﻿  ]);
+﻿}(jQuery, window));

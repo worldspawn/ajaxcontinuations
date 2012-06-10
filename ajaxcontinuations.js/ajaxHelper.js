@@ -1,5 +1,5 @@
-﻿﻿(function ($, global) {
-  $.fn.ajaxJson = function (endpoint, payload) {
+﻿﻿(function ($) {
+  $.ajaxJson = function (endpoint, payload) {
     return $.ajax({
       converters : {
         'text json': function (data) {
@@ -20,4 +20,5 @@
       dataType: 'json'
     });
   };
-}(jQuery, this));
+}(jQuery));
+﻿
