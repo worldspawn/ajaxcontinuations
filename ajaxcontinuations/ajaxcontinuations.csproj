@@ -85,6 +85,10 @@
       <Project>{B457BC59-BD1E-481B-98F8-41A661A4412F}</Project>
       <Name>MvcAjaxSupport</Name>
     </ProjectReference>
+      <ProjectReference Include="..\ajaxcontinuations.js\ajaxcontinuations.js.csproj">
+          <Project>{38DEF3E0-3DDC-4B30-A83B-4966481C9B95}</Project>
+          <Name>ajaxcontinuations.js</Name>
+      </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Home\Index.cshtml" />
@@ -100,6 +104,12 @@
   <Target Name="MvcBuildViews" AfterTargets="AfterBuild" Condition="'$(MvcBuildViews)'=='true'">
     <AspNetCompiler VirtualPath="temp" PhysicalPath="$(WebProjectOutputDir)" />
   </Target>
+    <Target Name="CopyJSReferences">
+        <MSBuild Projects="@(ProjectReference)" Targets="Build" BuildInParallel="true" Condition="'%(Name)'=='ajaxcontinuations.js'">
+            <Output TaskParameter="TargetOutpus" ItemName="OutputAssemblies" />
+        </MSBuild>
+        <Copy SourceFiles="ajax.continuations.js" DestinationFiles="$(PostBuildDir)" SkipUnchangedFiles="true" />
+    </Target>
   <ProjectExtensions>
     <VisualStudio>
       <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">

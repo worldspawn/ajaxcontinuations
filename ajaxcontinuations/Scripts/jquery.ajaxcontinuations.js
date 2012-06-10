@@ -110,7 +110,7 @@ $.continuations = new $.continuationModule(eventAgreggrator, [
           matchingPolicies.push(p);
         }
       }
-      console.log(matchingPolicies);
+
       for (var i = 0; i < matchingPolicies.length; ++i) {
         matchingPolicies[i].execute(continuation);
       }

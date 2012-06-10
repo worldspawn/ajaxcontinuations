@@ -1,5 +1,5 @@
 ﻿﻿(function ($, global) {
-  global.ContinuationModule.ajaxJson = function (endpoint, payload) {
+  $.fn.ajaxJson = function (endpoint, payload) {
     return $.ajax({
       converters : {
         'text json': function (data) {
